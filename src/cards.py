@@ -66,15 +66,19 @@ class Player(object):
 		sum_hand = 0
 		for c in self.hand:
 			if sum_hand > 21 and c.value == "Ace":
-				sum_hand = sum_hand - 10
-			if c.value == "Jack" or c.value == "Queen" or c.value == "King":
-				sum_hand = sum_hand + 10;
+				sum_hand -= 10
+			elif c.value == "Jack" or c.value == "Queen" or c.value == "King":
+				sum_hand += 10;
 			elif c.value == "Ace":
-				sum_hand = sum_hand + 11
+				sum_hand += 11
 			else:
-				sum_hand = sum_hand + int(c.value)
+				sum_hand += int(c.value)
 
 		return sum_hand
+
+	def winning_percentage(winning_count, num_games):
+		return
+
 
 	def show(self):
 		for c in self.hand:

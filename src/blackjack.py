@@ -33,13 +33,13 @@ def validate_input(player_input):
 
 
 def show_stats(person, state):
-	print("%s cards are:\n" %person)
+	print("%s cards are:\n" %person.name)
 	person.show()
 	person.state = state
 	person_sum = person.total()
 	print("sum: %d\n" %person_sum) 
 	print("-----------------------------------------------------------")
-
+	#return person_sum, person.state
 
 def game_round(player_input, player, dealer, deck):
 
@@ -63,16 +63,26 @@ def game_round(player_input, player, dealer, deck):
 	else:
 		show_stats(dealer, "stop")
 
+	player_sum = player.total()
+	dealer_sum = dealer.total()
+
+	print("temp1: %d" %player_sum)
+	print("temp2: %d" %dealer_sum)
+
+	return player_sum, dealer_sum
+
 def calculate_winning(person, winnings, num_games):
-	
-	if person == "dealer":
+	print("person: %s" %person.name)
+	if person.name == "Dealer":
 		print("DEALER WINS!\n")
 	else:
 		print("YOU WIN!\n")
+
 	print("-----------------------------------------------------------")
-	winnings = winnings + 1
-	person.winnings(winnings, num_games)
-	break
+	winnings += 1
+	print("winnings: %d" %winnings)
+	#person.winnings(winnings, num_games)
+	exit()
 
 def main():
 
@@ -113,7 +123,7 @@ def main():
 				player_input = delete_whitespace(player_input)
 				player_input = validate_input(player_input)
 				print("-----------------------------------------------------------")
-				game_round(player_input, player, dealer, deck)
+				player_sum, dealer_sum = game_round(player_input, player, dealer, deck)
 
 		num_games = num_games + 1
 		print("num_games: %d" %num_games)
@@ -127,23 +137,32 @@ def main():
 		# if deck.empty() == True:
 		# deck.build()
 
+		print("Before cases\n")
+		print("player_sum = %d" %player_sum)
+		print("dealer_sum = %d" %dealer_sum)
 		if player_sum == blackjack and dealer_sum == blackjack:
 			# dealer wins
+			print("case1")
 			calculate_winning(dealer, dealer_winnings, num_games)
-		elif (player_sum <= blackjack && player_sum > dealer_sum):
+		elif (player_sum <= blackjack and player_sum > dealer_sum):
 			#player wins
+			print("case2")
 			calculate_winning(player, player_winnings, num_games)
-		elif (dealer_sum <= blackjack && dealer_sum > player_sum):
+		elif (dealer_sum <= blackjack and dealer_sum > player_sum):
 			#dealer wins
+			print("case3")
 			calculate_winning(dealer, dealer_winnings, num_games)
-		elif (player_sum > blackjack && dealer_sum > blackjack):
+		elif (player_sum > blackjack and dealer_sum > blackjack):
 			#dealer wins
+			print("case4")
 			calculate_winning(dealer, dealer_winnings, num_games)
-		elif (player_sum <= blackjack && dealer_sum > blackjack):
+		elif (player_sum <= blackjack and dealer_sum > blackjack):
 			#player wins
+			print("case5")
 			calculate_winning(player, player_winnings, num_games)
-		elif (dealer_sum <= blackjack && player_sum > blackjack):
+		elif (dealer_sum <= blackjack and player_sum > blackjack):
 			#dealer wins
+			print("case6")
 			calculate_winning(dealer, dealer_winnings, num_games)
 			
 

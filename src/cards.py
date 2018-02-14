@@ -22,7 +22,7 @@ class Card(object):
 
 
 # SUMMARY: Each deck has 52 cards
-# FUNCTIONS: Build the deck, show each card in the deck, shuffle the deck
+# FUNCTIONS: Build the deck, shuffle the deck, draw from the deck, rebuild if deck is empty
 class Deck(object):
 	def __init__(self):
 		self.cards = []
@@ -50,8 +50,8 @@ class Deck(object):
 			self.build()
 
 
-# SUMMARY: Player can draw card from deck
-# FUNCTIONS: draw a card from deck, show the card
+# SUMMARY: Player attributes and capabilities
+# FUNCTIONS: draw a card from deck, calculate hand total, winnings percentage, show cards in hand
 class Player(object):
 	def __init__(self, name, state, wins, num_games):
 		self.name = name
@@ -75,14 +75,13 @@ class Player(object):
 				sum_hand += 11
 			else:
 				sum_hand += int(c.value)
-
 		return sum_hand
 
 	def winnings(self, wins, num_games):
 		if wins == 0:
-			print("{} winning percentage = 0%".format(self.name))
+			print(color.BOLD + color.GREEN + "{} winning percentage = 0%".format(self.name) + color.END + color.END)
 		else:
-			print("{} winning percentage = {}%".format(self.name, round(100*float(wins)/float(num_games), 2)))
+			print(color.BOLD + color.GREEN + "{} winning percentage = {}%".format(self.name, round(100*float(wins)/float(num_games), 2))+ color.END + color.END)
 
 	def show(self):
 		for c in self.hand:

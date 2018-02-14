@@ -30,7 +30,9 @@
 
 
 ## Testing
-
+* ran 6 games and tested deck was reshuffled
+* checked percentage for 6 games
+* algorithm for dealer is really bad 
 
 ## Challenges
 

@@ -9,9 +9,14 @@ import random
 import sys
 
 # GLOBALS
-num_dealings = 0 
 num_games = 0
+
+winnings = 0
+state = ["start", "continue", "stop"]
+start_state = "start"
 blackjack = 21
+
+all_done = False
 
 # SUMMARY: deletes whitespace before, between and after text
 def delete_whitespace(player_input):
@@ -30,10 +35,6 @@ def validate_input(player_input):
 		validate_input(player_input)
 		return player_input
 
-# SUMMARY: shuffle what remains of the deck 
-def shuffle_cards(num_cards):
-	return
-
 def main():
 
 	while (1):
@@ -46,13 +47,13 @@ def main():
 		print("-----------------------------------------------------------")
 		
 		print("Here are your cards, player!\n")
-		player = Player("Player")
+		player = Player("Player", start_state, winnings)
 		player.draw(deck).draw(deck)
 		player.show()
 		player_cards = player.hand
 
 		print("\nThe dealer has his cards now too!\n")
-		dealer = Player("Dealer")
+		dealer = Player("Dealer", start_state, winnings)
 		dealer.draw(deck).draw(deck)
 		dealer_cards = dealer.hand
 		print("-----------------------------------------------------------")
@@ -61,6 +62,46 @@ def main():
 		player_input = delete_whitespace(player_input)
 		player_input = validate_input(player_input)
 		print("-----------------------------------------------------------")
+
+		* Dealer must hit on soft 17.
+		* Single Deck. The deck is shuffled every 6 rounds.
+		* Keep track of win percentage for the player.
+
+		if num_games % 6 == 0:
+			deck.shuffle()
+		if deck.empty() == True:
+			deck.build()
+
+		player_sum = 
+		dealer_sum = 
+
+		if player_input == "h":
+			player.draw(deck)
+			player.show()
+			player.state("continue")
+		else:
+			player.state("stop")
+			print("Your cards are:\n")
+			player.show()
+			print("Total: %d" %player_sum)
+			print("-----------------------------------------------------------")
+
+
+		if player.state = "stop" and dealer.state = "stop":
+			num_games++
+			if player_sum == blackjack and dealer_sum == blackjack:
+				# dealer wins
+			else if (player_sum <= blackjack && player_sum > dealer_sum):
+				#player wins
+			else if (dealer_sum <= blackjack && dealer_sum > player_sum):
+				#dealer wins
+			else if (player_sum > blackjack && dealer_sum > blackjack):
+				#dealer wins
+
+
+
+
+
 
 		
 if __name__ == "__main__":

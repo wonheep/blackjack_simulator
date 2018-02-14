@@ -9,6 +9,8 @@
 **Development Environment**
 * python 3
 
+**Time to Complete**: 2/13/18-2/14/18
+
 **Running the Program**
 * if you are running python3, run command: ```python blackjack.py``` 
 * if env is set to python2, install python3, and run ```python3 blackjack.py```

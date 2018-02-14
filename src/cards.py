@@ -52,9 +52,9 @@ class Deck(object):
 # SUMMARY: Player can draw card from deck
 # FUNCTIONS: draw a card from deck, show the card
 class Player(object):
-	def __init__(self, name):#, state, winnings):
+	def __init__(self, name, state):#, state, winnings):
 		self.name = name
-		#self.state = state
+		self.state = state
 		#self.winnings = winnings
 		self.hand = []
 
@@ -65,6 +65,8 @@ class Player(object):
 	def total(self):
 		sum_hand = 0
 		for c in self.hand:
+			if sum_hand > 21 and c.value == "Ace":
+				sum_hand = sum_hand - 10
 			if c.value == "Jack" or c.value == "Queen" or c.value == "King":
 				sum_hand = sum_hand + 10;
 			elif c.value == "Ace":
@@ -72,8 +74,6 @@ class Player(object):
 			else:
 				sum_hand = sum_hand + int(c.value)
 
-			if sum_hand > 21 and c.value == "Ace":
-				sum_hand = sum_hand - 10
 		return sum_hand
 
 	def show(self):

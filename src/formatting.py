@@ -1,3 +1,5 @@
+### Functions for print statement formatting ###
+
 
 class color:
    DARKCYAN = '\033[36m'
@@ -9,10 +11,12 @@ class color:
    ITALIC = '\033[3m'
    END = '\033[0m'
 
+
 def box_lines(lines, width):
     topBottomRow = "+" + "-" * width + "+"
     middle = "\n".join("|" + x.ljust(width) + "|" for x in lines)
     return "\n" + color.BOLD + color.RED + "{0}\n{1}\n{0}".format(topBottomRow, middle) + color.END + color.END
+
 
 def box_lines2(lines, width):
     topBottomRow = "+" + "-" * width + "+"
@@ -32,6 +36,7 @@ def split_msg(msg, width):
 
 def border_msg(msg, width):
     return(box_lines(split_msg(msg, width), width))
+
 
 def winner_msg(msg, width):
     return(box_lines2(split_msg(msg, width), width))

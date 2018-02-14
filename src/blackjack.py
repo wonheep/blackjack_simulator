@@ -1,21 +1,25 @@
-# BLACKJACK GAME - SINGLE PLAYER
+### BLACKJACK GAME - SINGLE PLAYER ###
 # AUTHOR: Wonhee Park
 
+
 # LIBRARIES
-from cards import Card, Deck, Player
+from cards import *
 from formatting import *
 import random
 import sys
+
 
 # GLOBALS
 blackjack = 21
 
 
+# SUMMARY: Remove spaces from user input
 def delete_whitespace(player_input):
 	player_input = ''.join(player_input.split()) 
 	return player_input.lower()
 
 
+# SUMMARY: Validate that user input is h or s
 def validate_input(player_input):
 	if player_input == "exit":
 		sys.exit()
@@ -27,7 +31,7 @@ def validate_input(player_input):
 		validate_input(player_input)
 		return player_input
 
-
+# SUMMARY: Set state and total of player and show it's sum to console
 def show_stats_player(person, state):
 	print(color.BOLD + "%s cards are:" %person.name + color.END)
 	person.show()
@@ -36,6 +40,9 @@ def show_stats_player(person, state):
 	print(color.BOLD + "sum: %d\n" %person_sum + color.END) 
 	dotted_line()
 
+
+# SUMMARY: Set state and total of dealer
+# DEBUG: uncomment if you want to see dealer stats
 def show_stats_dealer(person, state):
 	# print("%s cards are:" %person.name)
 	# person.show()
@@ -44,6 +51,9 @@ def show_stats_dealer(person, state):
 	# print("sum: %d\n" %person_sum) 
 	# dotted_line()
 
+
+# SUMMARY: Dealer logic to hit or stand, resetting player stats after input
+# DEBUG: uncomment if you want to see values iteratively
 def game_round(player, dealer, deck, player_input=None):
 	if dealer.total() <= 17:
 		dealer.draw(deck)
@@ -73,10 +83,10 @@ def game_round(player, dealer, deck, player_input=None):
 	# print("player state %s" %player_state)
 	# print("dealer: %d" %dealer_sum)
 	# print("dealer state %s" %dealer_state)
-
 	return player_sum, dealer_sum
 
 
+# SUMMARY: Print winner message box to console based on person (dealer or player)
 def calculate_win(person, wins, num_games):
 	# DEBUG
 	# print("person: %s" %person.name)
@@ -89,6 +99,8 @@ def calculate_win(person, wins, num_games):
 	return wins
 
 
+# SUMMARY: Determine winner of game round after both players are at "stop" state
+# DEBUG: Uncomment to see which case of winning logic was used to determine winner. Already verified
 def determine_winner(player_sum, dealer_sum, dealer, player, num_games, dealer_wins, player_wins):
 	if player_sum == blackjack and dealer_sum == blackjack:
 		wins = calculate_win(dealer, dealer_wins, num_games)
@@ -129,6 +141,8 @@ def determine_winner(player_sum, dealer_sum, dealer, player, num_games, dealer_w
 	return dealer_wins, player_wins
 	
 
+# SUMMARY: game goes on infinitely, unless user types exit when requesting input
+# DEBUG: Uncomment to see dealer stats as well
 def main():
 	num_games = 0
 	dealer_wins = 0
@@ -191,10 +205,12 @@ def main():
 		dealer.winnings(dealer_wins, num_games)
 		player.winnings(player_wins, num_games)
 
+		# SUMMARY: requirement met, checked manually after 6 rounds 
 		if num_games % 6 == 0:
 			shuffle_statement()
 			deck.shuffle()
 
+		# SUMMARY: rebuild deck if deck runs out 
 		deck.empty()
 
 		end_line()
@@ -202,3 +218,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

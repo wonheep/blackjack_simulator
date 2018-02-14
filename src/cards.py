@@ -1,8 +1,9 @@
-# Classes for Card, Deck, Player 
+### Classes for Card, Deck, Player objects ###
+
 
 # LIBRARIES
 import random
-from formatting import color
+from formatting import *
 
 
 # GLOBALS

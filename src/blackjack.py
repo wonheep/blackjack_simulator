@@ -10,8 +10,8 @@ import sys
 
 # GLOBALS
 num_games = 0
-
-winnings = 0
+dealer_winnings = 0
+player_winnings = 0
 state = ["start", "continue", "stop"]
 start_state = "start"
 blackjack = 21
@@ -47,62 +47,68 @@ def main():
 		print("-----------------------------------------------------------")
 		
 		print("Here are your cards, player!\n")
-		player = Player("Player", start_state, winnings)
+		player = Player("Player")#, start_state, player_winnings)
 		player.draw(deck).draw(deck)
 		player.show()
-		player_cards = player.hand
 
 		print("\nThe dealer has his cards now too!\n")
-		dealer = Player("Dealer", start_state, winnings)
+		dealer = Player("Dealer")#, start_state, dealer_winnings)
 		dealer.draw(deck).draw(deck)
-		dealer_cards = dealer.hand
+		dealer.show()
 		print("-----------------------------------------------------------")
 		
+		player_sum = player.total()
+		dealer_sum = dealer.total()
+		print("player sum: %d\n" %player_sum) 
+		print("player sum: %d\n" %dealer_sum) 
+		print("-----------------------------------------------------------")
+
 		player_input = input("Would you like to hit or stand?\nType h to hit and s to stand: ")
 		player_input = delete_whitespace(player_input)
 		player_input = validate_input(player_input)
 		print("-----------------------------------------------------------")
 
-		* Dealer must hit on soft 17.
-		* Single Deck. The deck is shuffled every 6 rounds.
-		* Keep track of win percentage for the player.
 
-		if num_games % 6 == 0:
-			deck.shuffle()
-		if deck.empty() == True:
-			deck.build()
+		# * Dealer must hit on soft 17.
+		# * Single Deck. The deck is shuffled every 6 rounds.
+		# * Keep track of win percentage for the player.
 
-		player_sum = 
-		dealer_sum = 
+		# if num_games % 6 == 0:
+		# deck.shuffle()
+		# if deck.empty() == True:
+		# deck.build()
 
-		if player_input == "h":
-			player.draw(deck)
-			player.show()
-			player.state("continue")
-		else:
-			player.state("stop")
-			print("Your cards are:\n")
-			player.show()
-			print("Total: %d" %player_sum)
-			print("-----------------------------------------------------------")
+		# if player_input == "h":
+		# 	player.draw(deck)
+		# 	player.show()
+		# 	player.state("continue")
+		# else:
+		# 	player.state("stop")
+		# 	print("Your cards are:\n")
+		# 	player.show()
+		# 	print("Total: %d" %player_sum)
+		# 	print("-----------------------------------------------------------")
 
 
-		if player.state = "stop" and dealer.state = "stop":
-			num_games++
-			if player_sum == blackjack and dealer_sum == blackjack:
-				# dealer wins
-			else if (player_sum <= blackjack && player_sum > dealer_sum):
-				#player wins
-			else if (dealer_sum <= blackjack && dealer_sum > player_sum):
-				#dealer wins
-			else if (player_sum > blackjack && dealer_sum > blackjack):
-				#dealer wins
+		# if player.state = "stop" and dealer.state = "stop":
+		# 	num_games++
+		# 	if player_sum == blackjack and dealer_sum == blackjack:
+		# 		# dealer wins
+		# 		dealer.winnings = dealer_winnings++
+		# 	else if (player_sum <= blackjack && player_sum > dealer_sum):
+		# 		#player wins
+		# 		player.winnings = player_winnings++
+		# 	else if (dealer_sum <= blackjack && dealer_sum > player_sum):
+		# 		#dealer wins
+		# 		dealer.winnings = dealer_winnings++
+		# 	else if (player_sum > blackjack && dealer_sum > blackjack):
+		# 		#dealer wins
+		# 		dealer.winnings = dealer_winnings++ 
+		# 	else if (player_sum <= blackjack && dealer_sum > blackjack):
+		# 		#player wins
+		# 	else if (dealer_sum <= blackjack && player_sum > blackjack):
+		# 		#dealer wins
 
 
-
-
-
-
-		
 if __name__ == "__main__":
     main()

@@ -52,15 +52,29 @@ class Deck(object):
 # SUMMARY: Player can draw card from deck
 # FUNCTIONS: draw a card from deck, show the card
 class Player(object):
-	def __init__(self, name, state, winnings):
+	def __init__(self, name):#, state, winnings):
 		self.name = name
-		self.state = state
-		self.winnings = winnings
+		#self.state = state
+		#self.winnings = winnings
 		self.hand = []
 
 	def draw(self, deck):
 		self.hand.append(deck.draw())
 		return self
+
+	def total(self):
+		sum_hand = 0
+		for c in self.hand:
+			if c.value == "Jack" or c.value == "Queen" or c.value == "King":
+				sum_hand = sum_hand + 10;
+			elif c.value == "Ace":
+				sum_hand = sum_hand + 11
+			else:
+				sum_hand = sum_hand + int(c.value)
+
+			if sum_hand > 21 and c.value == "Ace":
+				sum_hand = sum_hand - 10
+		return sum_hand
 
 	def show(self):
 		for c in self.hand:

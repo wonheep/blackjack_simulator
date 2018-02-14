@@ -2,6 +2,7 @@
 
 # LIBRARIES
 import random
+from formatting import color
 
 
 # GLOBALS
@@ -17,7 +18,7 @@ class Card(object):
 		self.value = value
 
 	def show(self):
-		print("{} of {}".format(self.value, self.suit))
+		print(color.DARKCYAN + "{} of {}".format(self.value, self.suit) + color.END)
 
 
 # SUMMARY: Each deck has 52 cards
@@ -45,16 +46,18 @@ class Deck(object):
 		return self.cards.pop()
 
 	def empty(self):
-		if len(self.cards) ß== 0:
+		if len(self.cards) == 0:
 			self.build()
 
 
 # SUMMARY: Player can draw card from deck
 # FUNCTIONS: draw a card from deck, show the card
 class Player(object):
-	def __init__(self, name, state):
+	def __init__(self, name, state, wins, num_games):
 		self.name = name
 		self.state = state
+		self.wins = wins
+		self.num_games = num_games
 		self.hand = []
 
 	def draw(self, deck):

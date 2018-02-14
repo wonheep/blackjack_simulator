@@ -5,9 +5,11 @@
 **Files**
 * ```README.md```
 * ```blackjack.py```
+* ```cards.py```
+* ```formatting.py```
 
 **Development Environment**
-* python 3
+* python3
 
 **Time to Complete**: 2/13/18-2/14/18
 
@@ -44,6 +46,8 @@
 	* shuffle algorithm (Fisher Yates): [link3](http://code.activestate.com/recipes/360461-fisher-yates-shuffle/)
 	* deck OOP: [link4](https://www.youtube.com/watch?v=t8YkjDH86Y4)
 	* https://stackoverflow.com/questions/24719368/syntaxerror-non-default-argument-follows-default-argument
+	* https://stackoverflow.com/questions/8924173/how-do-i-print-bold-text-in-python
+	https://en.wikipedia.org/wiki/ANSI_escape_code
 
 
 ## To Do

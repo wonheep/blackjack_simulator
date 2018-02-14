@@ -44,18 +44,17 @@ class Deck(object):
 	def draw(self):
 		return self.cards.pop()
 
-	def empty():
-		if len(self.cards) == 0:
-			return True
+	def empty(self):
+		if len(self.cards) ß== 0:
+			self.build()
 
 
 # SUMMARY: Player can draw card from deck
 # FUNCTIONS: draw a card from deck, show the card
 class Player(object):
-	def __init__(self, name, state):#, state, winnings):
+	def __init__(self, name, state):
 		self.name = name
 		self.state = state
-		#self.winnings = winnings
 		self.hand = []
 
 	def draw(self, deck):
@@ -76,9 +75,11 @@ class Player(object):
 
 		return sum_hand
 
-	def winning_percentage(winning_count, num_games):
-		return
-
+	def winnings(self, wins, num_games):
+		if wins == 0:
+			print("{} winning percentage = 0%".format(self.name))
+		else:
+			print("{} winning percentage = {}%".format(self.name, round(100*float(wins)/float(num_games), 2)))
 
 	def show(self):
 		for c in self.hand:

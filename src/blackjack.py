@@ -5,21 +5,18 @@
 from cards import Card
 from cards import Deck
 from cards import Player
+from formatting import border_msg, dotted_line
 import random
 import sys
 
 # GLOBALS
-dealer_winnings = 0
-player_winnings = 0
 blackjack = 21
-#all_done = False
 
-# SUMMARY: deletes whitespace before, between and after text
 def delete_whitespace(player_input):
 	player_input = ''.join(player_input.split()) 
 	return player_input.lower()
 
-# SUMMARY: error checking from user input
+ß
 def validate_input(player_input):
 	if player_input == "exit":
 		sys.exit()
@@ -38,19 +35,11 @@ def show_stats(person, state):
 	person.state = state
 	person_sum = person.total()
 	print("sum: %d\n" %person_sum) 
-	print("-----------------------------------------------------------")
+	dotted_line()
 	#return person_sum, person.state
 
-def game_round(player_input, player, dealer, deck):
 
-	# Player's request
-	if player_input == "h":
-		player.draw(deck)
-		show_stats(player, "continue")
-	else:
-		show_stats(player, "stop")
-
-	# Dealer's Algorithm
+def game_round(player, dealer, deck, player_input=None):
 	if dealer.total() <= 17:
 		dealer.draw(deck)
 		show_stats(dealer, "continue")
@@ -63,108 +52,137 @@ def game_round(player_input, player, dealer, deck):
 	else:
 		show_stats(dealer, "stop")
 
+	if player_input == "h":
+		player.draw(deck)
+		show_stats(player, "continue")
+	else:
+		show_stats(player, "stop")
+
+	# DEBUG 
 	player_sum = player.total()
 	dealer_sum = dealer.total()
-
-	print("temp1: %d" %player_sum)
-	print("temp2: %d" %dealer_sum)
+	player_state = player.state
+	dealer_state = dealer.state
+	print("player: %d" %player_sum)
+	print("player state %s" %player_state)
+	print("dealer: %d" %dealer_sum)
+	print("dealer state %s" %dealer_state)
 
 	return player_sum, dealer_sum
 
-def calculate_winning(person, winnings, num_games):
+
+def calculate_win(person, wins, num_games):
+	wins += 1
 	print("person: %s" %person.name)
 	if person.name == "Dealer":
 		print("DEALER WINS!\n")
 	else:
 		print("YOU WIN!\n")
+	print("{} winning percentage = {}%".format(person.name, round(100*float(wins)/float(num_games),2)))
+	dotted_line()
 
-	print("-----------------------------------------------------------")
-	winnings += 1
-	print("winnings: %d" %winnings)
-	#person.winnings(winnings, num_games)
-	exit()
+
+def determine_winner(player_sum, dealer_sum, dealer, player, num_games, dealer_wins, player_wins):
+	if player_sum == blackjack and dealer_sum == blackjack:
+		# dealer wins
+		print("case1")
+		win = calculate_win(dealer, dealer_wins, num_games)
+		print("HELP: %d", win)
+	elif (player_sum <= blackjack and player_sum > dealer_sum):
+		#player wins
+		print("case2")
+		win= calculate_win(player, player_wins, num_games)
+		print("HELP: %d", win)
+	elif (dealer_sum <= blackjack and dealer_sum > player_sum):
+		#dealer wins
+		print("case3")
+		win=calculate_win(dealer, dealer_wins, num_games)
+		print("HELP: %d", win)
+	elif (player_sum > blackjack and dealer_sum > blackjack):
+		#dealer wins
+		print("case4")
+		win=calculate_win(dealer, dealer_wins, num_games)
+		print("HELP: %d", win)
+	elif (player_sum <= blackjack and dealer_sum > blackjack):
+		#player wins
+		print("case5")
+		win=calculate_win(player, player_wins, num_games)
+		print("HELP: %d", win)
+	elif (dealer_sum <= blackjack and player_sum > blackjack):
+		#dealer wins
+		print("case6")
+		win=calculate_win(dealer, dealer_wins, num_games)
+		print("HELP: %d", win)
+
 
 def main():
-
 	num_games = 0
+	dealer_wins = 0
+	player_wins = 0
 
 	while (1):
-		print("\nWelcome to a game of blackjack!")
+		print(border_msg("""   Welcome to a game of blackjack!   """, 40))
 		print("Type exit if you ever want to exit out of your game.\n")
 		deck = Deck()
 		deck.build()
 		deck.shuffle()
 		#deck.show()
-		print("-----------------------------------------------------------")
+		dotted_line()
 		
 		print("Here are your cards, player!\n")
-		player = Player("Player", "start")#, start_state, player_winnings)
+		player = Player("Player", "start")#, player_wins, num_games)
 		player.draw(deck).draw(deck)
 		player.show()
 
 		print("\nThe dealer has his cards now too!\n")
-		dealer = Player("Dealer", "start")#, start_state, dealer_winnings)
+		dealer = Player("Dealer", "start")#, dealer_wins, num_games)
 		dealer.draw(deck).draw(deck)
 		dealer.show()
-		print("-----------------------------------------------------------")
+		dotted_line()
 		
 		#DEBUG
 		player_sum = player.total()
 		dealer_sum = dealer.total()
 		print("player sum: %d\n" %player_sum) 
 		print("dealer sum: %d\n" %dealer_sum) 
-		print("-----------------------------------------------------------")
+		dotted_line()
 
+		player.state = "continue"
+		dealer.state = "continue"
 		while (1):
 			if player.state == "stop" and dealer.state == "stop":
 				break
-			else:
+			elif player.state == "continue":
 				player_input = input("Would you like to hit or stand?\nType h to hit and s to stand: ")
 				player_input = delete_whitespace(player_input)
 				player_input = validate_input(player_input)
-				print("-----------------------------------------------------------")
-				player_sum, dealer_sum = game_round(player_input, player, dealer, deck)
+				dotted_line()
+				player_sum, dealer_sum = game_round(player, dealer, deck, player_input)
+			else:
+				print("dealer is still playing.\n")
+				dotted_line()
+				player_sum, dealer_sum = game_round(player, dealer, deck, None)
 
 		num_games = num_games + 1
 		print("num_games: %d" %num_games)
 
-		# * Dealer must hit on soft 17.
-		# * Single Deck. The deck is shuffled every 6 rounds.
-		# * Keep track of win percentage for the player.
-
-		# if num_games % 6 == 0:
-		# deck.shuffle()
-		# if deck.empty() == True:
-		# deck.build()
-
+		# DEBUG
 		print("Before cases\n")
 		print("player_sum = %d" %player_sum)
 		print("dealer_sum = %d" %dealer_sum)
-		if player_sum == blackjack and dealer_sum == blackjack:
-			# dealer wins
-			print("case1")
-			calculate_winning(dealer, dealer_winnings, num_games)
-		elif (player_sum <= blackjack and player_sum > dealer_sum):
-			#player wins
-			print("case2")
-			calculate_winning(player, player_winnings, num_games)
-		elif (dealer_sum <= blackjack and dealer_sum > player_sum):
-			#dealer wins
-			print("case3")
-			calculate_winning(dealer, dealer_winnings, num_games)
-		elif (player_sum > blackjack and dealer_sum > blackjack):
-			#dealer wins
-			print("case4")
-			calculate_winning(dealer, dealer_winnings, num_games)
-		elif (player_sum <= blackjack and dealer_sum > blackjack):
-			#player wins
-			print("case5")
-			calculate_winning(player, player_winnings, num_games)
-		elif (dealer_sum <= blackjack and player_sum > blackjack):
-			#dealer wins
-			print("case6")
-			calculate_winning(dealer, dealer_winnings, num_games)
-			
+
+		win = determine_winner(player_sum, dealer_sum, dealer, player, num_games, dealer_wins, player_wins)
+		print("checking: %d", win)
+		print("dealer wins: %d" %dealer_wins)
+		print("player wins: %d" %player_wins)
+		#dealer.winnings(dealer_wins, num_games)
+		#player.winnings(player_wins, num_games)
+
+		if num_games % 6 == 0:
+		 	print("Reshuffling Deck!")
+		 	deck.shuffle()
+		deck.empty()
+		
 
 if __name__ == "__main__":
     main()

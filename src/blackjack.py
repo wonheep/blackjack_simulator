@@ -60,10 +60,6 @@ def game_round(player, dealer, deck, player_input=None):
 		show_stats_dealer(dealer, "continue")
 	elif dealer.total() == blackjack:
 		show_stats_dealer(dealer, "stop")
-	# BAD ALGORITHM
-	# elif dealer.total() > 17 and dealer.total() < blackjack:
-	#	dealer.draw(deck)
-	#	show_stats(dealer, "stop")
 	else:
 		show_stats_dealer(dealer, "stop")
 
@@ -180,9 +176,7 @@ def main():
 			if player.state == "stop" and dealer.state == "stop":
 				break
 			elif player.state == "continue":
-				player_input = input_msg()
-				player_input = delete_whitespace(player_input)
-				player_input = validate_input(player_input)
+				player_input = validate_input(delete_whitespace(input_msg())
 				dotted_line()
 				player_sum, dealer_sum = game_round(player, dealer, deck, player_input)
 			else:

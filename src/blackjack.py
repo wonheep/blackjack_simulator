@@ -176,7 +176,7 @@ def main():
 			if player.state == "stop" and dealer.state == "stop":
 				break
 			elif player.state == "continue":
-				player_input = validate_input(delete_whitespace(input_msg())
+				player_input = validate_input(delete_whitespace(input_msg()))
 				dotted_line()
 				player_sum, dealer_sum = game_round(player, dealer, deck, player_input)
 			else:

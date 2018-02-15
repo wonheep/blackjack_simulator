@@ -56,7 +56,7 @@ class Deck(object):
 
 	def empty(self):
 ```
-* each Player is given a name, in this case it only happense once (Player, Dealer). State: start, continue, stop. Initially given start status, the stop status once both players decide to stand. Number of wins (cumulative), and number of games player (cumulative)
+* each Player is given a name, in this case it only happense once (Player, Dealer). State: start, continue, stop. Initially given start status, the status is set to stop once both players decide to stand. Number of wins is cumulative, and number of games player played cumulative.
 ```Python
 class Player(object):
 	def __init__(self, name, state, wins, num_games):
@@ -89,12 +89,12 @@ class color:
 ```
 * ```blackjack.py```
 	* ```def main()``` game runs in an infinite while loop unless user gives exit input, then exits. Build beginning messages, initialize dealer and player and their attributes. Draw 2 cards for each player consecutively. Set statuses to continue and enter another infinite while loop that runs until both players have chosen to stand (state = stop). Increment game count and calculate winner based on their hand sums by calling player.winnings to calculate winning percentage. Reshuffle deck every 6 games, and check at end of each game if deck has run out of cards. 
-	* ```def delete_whitespace()``` remove trailing, leading, and in-between white spaces, convert input to lower case.
+	* ```def delete_whitespace()``` remove trailing, leading, and in-between white spaces, and convert input to lower case.
 	* ```def validate_input()``` exit out of program if input is exit, continue if valid input, poll user for valid input if invalid one given. 
 	* ```def game_round()``` hit/stand logic for dealer, cumulate hand sum. Update player's hand according to their input. Return both player's hand sum.
 	* ```def show_stats_<dealer or player>()``` Mainly for debugging purposes, wanted to check state and sum of both player's while each round of a game is occurring. 
 	* ```def determine_winner()``` logic to determine winner based on player_sum and dealer_sum. 6 scenarios mapped out. Dealer usually given biased win because if both players bust or both hit blackjack, dealer is given precedence. 
-	* ```def calculate_win()``` prints winner message to console and returns increment win_count of winner. 
+	* ```def calculate_win()``` prints winner message to console and returns increment win_count of winner to be used for calculting percentages. 
 
 ## Initial Thought Process
 * handle valid input for hit and stand + error handling

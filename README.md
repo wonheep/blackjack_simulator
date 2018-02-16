@@ -33,9 +33,9 @@
 * Dealer must hit on anything less than or equal to 16 and a soft 17 (hand with Ace card involved)
 * Dealer plays after player stands
 
-**Revisions Made**
+**Revisions Made on 2/16/18**
 * Old blackjack logic: have player and dealer take turns drawing from deck if they choose to hit. Soft 17 rule not implemented. 
-* New blackjack logic: all items from above section "Game Rules" has been now implemented/fixed. 
+* New blackjack logic: all items from above section "Game Rules" has been now implemented/fixed with a couple aesthetic changes to printed messages on console. 
 
 ## Design Choice
 * created classes to define a card object, deck object, and player object in ```card.py```. It was best to implement this aspect of the program as object-oriented because each had many attributes and functions that would be tedious to track via array, dictionary, and global variable implementation.

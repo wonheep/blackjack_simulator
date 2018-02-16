@@ -45,8 +45,10 @@ def winner_msg(msg, width):
 def dotted_line():
     print(color.BOLD + "-------------------------------------------------------" + color.END)
 
+
 def dotted_line2():
     print(color.BOLD + "-------------------DEALER PLAYS------------------------" + color.END)
+
 
 def end_line():
 	 print(color.BOLD + color.REDBRIGHT + "\n-----------------------END GAME-------------------------\n" + color.END + color.END)

@@ -70,6 +70,7 @@ class Player(object):
 		for c in self.hand:
 			if c.value == "Jack" or c.value == "Queen" or c.value == "King":
 				sum_hand += 10;
+			# Ace interpretation as either 11 or 1 
 			elif c.value == "Ace":
 				temp = sum_hand + 11
 				if temp > 21:

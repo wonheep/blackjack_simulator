@@ -32,7 +32,7 @@ def validate_input(player_input):
 		return player_input
 
 # SUMMARY: Set state and total of player and show it's sum to console
-def show_stats_player(person, state):
+def show_stats(person, state):
 	print(color.BOLD + "%s cards are:" %person.name + color.END)
 	person.show()
 	person.state = state
@@ -41,26 +41,16 @@ def show_stats_player(person, state):
 	dotted_line()
 
 
-# SUMMARY: Set state and total of dealer
-# DEBUG: uncomment if you want to see dealer stats
-def show_stats_dealer(person, state):
-	print(color.BOLD + "%s cards are:" %person.name +  color.END)
-	person.show()
-	person.state = state
-	person_sum = person.total()
-	print(color.BOLD + "sum: %d\n" %person_sum + color.END) 
-	#dotted_line()
-
-
+# SUMMARY: Player logic for hit/stand 
 def player_round(player, deck, player_input=None):
 	if player_input == "h":
 		player.draw(deck)
 		if player.total() > 21:
-			show_stats_player(player, "stop")
+			show_stats(player, "stop")
 		else:
-			show_stats_player(player, "continue") 
+			show_stats(player, "continue") 
 	else:
-		show_stats_player(player, "stop")
+		show_stats(player, "stop")
 
 	player_sum = player.total()
 	player_state = player.state
@@ -71,23 +61,22 @@ def player_round(player, deck, player_input=None):
 
 	return player_sum
 
-
-
+# SUMMARY: Dealer logic for hit/stand
 def dealer_round(dealer, deck, known, unknown):
 	if dealer.total() <= 16:
 		dealer.draw(deck)
-		show_stats_dealer(dealer, "continue")
+		show_stats(dealer, "continue")
 	elif dealer.total() == 17:
 		for c in dealer.hand:
 			if c.value == "Ace":
 				dealer.draw(deck)
-				show_stats_dealer(dealer, "continue")
+				show_stats(dealer, "continue")
 		else:
-			show_stats_dealer(dealer, "stop")
+			show_stats(dealer, "stop")
 	elif dealer.total() == 21:
-		show_stats_dealer(dealer, "stop")
+		show_stats(dealer, "stop")
 	else:
-		show_stats_dealer(dealer, "stop")
+		show_stats(dealer, "stop")
 
 	dealer_sum = dealer.total()
 	dealer_state = dealer.state
@@ -97,66 +86,6 @@ def dealer_round(dealer, deck, known, unknown):
 	# print("dealer state %s" %dealer_state)
 
 	return dealer_sum
-
-
-# SUMMARY: Print winner message box to console based on person (dealer or player)
-def calculate_win(person, wins, num_games):
-	# DEBUG
-	# print("person: %s" %person.name)
-
-	wins += 1
-	if person.name == "Dealer":
-		dealer_wins()
-	else:
-		player_wins()
-	return wins
-
-
-# SUMMARY: Determine winner of game round after both players are at "stop" state
-# DEBUG: Uncomment to see which case of winning logic was used to determine winner. Already verified
-def determine_winner(player_sum, dealer_sum, dealer, player, num_games, dealer_wins, player_wins):
-	if player_sum == blackjack and dealer_sum == blackjack:
-		wins = calculate_win(dealer, dealer_wins, num_games)
-		dealer_wins = wins
-		# DEBUG - dealer wins
-		# print("case1")
-		# print("HELP: %d", wins)
-	elif (player_sum <= blackjack and player_sum > dealer_sum):
-		wins = calculate_win(player, player_wins, num_games)
-		player_wins = wins
-		# DEBUG - player wins
-		# print("case2")
-		# print("HELP: %d", wins)
-	elif (dealer_sum <= blackjack and dealer_sum > player_sum):
-		wins = calculate_win(dealer, dealer_wins, num_games)
-		dealer_wins = wins
-		# DEBUG - dealer wins
-		# print("case3")
-		# print("HELP: %d", wins)
-	elif (player_sum > blackjack and dealer_sum > blackjack):
-		wins = calculate_win(dealer, dealer_wins, num_games)
-		dealer_wins = wins
-		# DEBUG - dealer wins
-		# print("case4")
-		# print("HELP: %d", wins)
-	elif (player_sum <= blackjack and dealer_sum > blackjack):
-		wins = calculate_win(player, player_wins, num_games)
-		player_wins = wins
-		# DEBUG - player wins
-		# print("case5")
-		# print("HELP: %d", wins)
-	elif (dealer_sum <= blackjack and player_sum > blackjack):
-		wins = calculate_win(dealer, dealer_wins, num_games)
-		dealer_wins = wins
-		# DEBUG - dealer wins
-		# print("case6")
-		# print("HELP: %d", wins)
-	else:
-		wins = calculate_win(dealer, dealer_wins, num_games)
-		dealer_wins = wins
-
-	return dealer_wins, player_wins
-
 
 # SUMMARY: game goes on infinitely, unless user types exit when requesting input
 # DEBUG: Uncomment to see dealer stats as well
@@ -170,7 +99,6 @@ def main():
 		deck = Deck()
 		deck.build()
 		deck.shuffle()
-		#deck.show()
 		dotted_line()
 		
 		player_statement()
@@ -186,9 +114,6 @@ def main():
 		unknown = dealer.draw(deck)
 		dealer.show_one()
 
-		# print("DEBUG:")
-		# dealer.show()
-		
 		player_sum = player.total()
 		dealer_sum = dealer.total()
 		# DEBUG
@@ -205,7 +130,7 @@ def main():
 				if c.value == "Ace":
 					player_wins()
 					p_wins += 1
-		# both player and dealer are blackjack
+		# both player and dealer are blackjack, tie
 		elif player_sum == 21 and dealer_sum == 21:
 			push()
 		else: 
@@ -250,8 +175,7 @@ def main():
 				else:
 					push()
 
-		#dealer_wins, player_wins = determine_winner(player_sum, dealer_sum, dealer, player, num_games, dealer_wins, player_wins, known)
-		
+		# summarizing information 
 		num_games += 1
 		summarygame()
 		print(color.BOLD + "dealer hand" + color.END)

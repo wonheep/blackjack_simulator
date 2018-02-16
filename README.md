@@ -12,6 +12,7 @@
 * python3
 
 **Time to Complete**: 2/13/18-2/14/18 (in GitHub commit history)
+* REVISED: 2/16/2018 to fix blackjack logic 
 
 **Running the Program**
 * if you are running python3, run command: ```python blackjack.py``` 
@@ -24,12 +25,23 @@
 * Player is not allowed to split cards.
 * Keep track of win percentage for the player.
 
+**Game Rules**
+* Player is given 2 cards and dealer is given 2 cards from shuffled deck, one of the dealer's cards is hidden 
+* Player plays (hit or stand) before dealer can play
+* If dealer and player ties --> push (nothing happens)
+* If player busts, house wins
+* Dealer must hit on anything less than or equal to 16 and a soft 17 (hand with Ace card involved)
+* Dealer plays after player stands
+
+**Revisions Made**
+* Old blackjack logic: have player and dealer take turns drawing from deck if they choose to hit. Soft 17 rule not implemented. 
+* New blackjack logic: all items from above section "Game Rules" has been now implemented/fixed. 
+
 ## Design Choice
 * created classes to define a card object, deck object, and player object in ```card.py```. It was best to implement this aspect of the program as object-oriented because each had many attributes and functions that would be tedious to track via array, dictionary, and global variable implementation.
 * separated formatting print statements to a different file, ```formatting.py``` in order to divide functionality and aesthetic purposes of the program.
 * Used the Fisher-Yates shuffle algorithm to shuffle the deck. source below.  
 * focused on modular code to avoid redundant operations
-* Dealer information is private, player only knows that dealer is continuing to hit but not their hand sum. 
 
 ## Implementation Steps
 * each card has suit and value, value goes from 2-10,J, Q, K, A defined via globals. 

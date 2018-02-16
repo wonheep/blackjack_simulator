@@ -10,8 +10,8 @@ import sys
 
 
 # GLOBALS
-blackjack = ["Jack", "Queen", "King"]
-tens = ["Jack", "Queen", "King", "Ace"]
+#blackjack = ["Jack", "Queen", "King"]
+tens = ["Jack", "Queen", "King"]
 
 # SUMMARY: Remove spaces from user input
 def delete_whitespace(player_input):
@@ -126,10 +126,8 @@ def main():
 
 		# player gets blackjack
 		if player_sum == 21 and dealer_sum != 21:
-			for c in player.hand:
-				if c.value == "Ace":
-					player_wins()
-					p_wins += 1
+			player_wins()
+			p_wins += 1
 		# both player and dealer are blackjack, tie
 		elif player_sum == 21 and dealer_sum == 21:
 			push()
@@ -155,13 +153,9 @@ def main():
 					dealer_sum = dealer_round(dealer, deck, known, unknown)
 
 				# dealer has blackjack 
-				if dealer_sum == 21:
-					for card in dealer.hand:
-						if card.value == "Ace":
-							for c in tens:
-								if card.value == c:
-									dealer_wins()
-									d_wins += 1
+				if dealer_sum == 21 and len(dealer.hand)==2:
+					dealer_wins()
+					d_wins += 1
 				# dealer busts
 				elif dealer_sum > 21:
 					player_wins()

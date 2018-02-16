@@ -9,6 +9,7 @@ from formatting import *
 # GLOBALS
 suits = ["clubs", "diamonds", "hearts", "spades"]
 values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
+edge = ["Jack", "Queen", "King", "Ace"]
 
 
 # SUMMARY: Each card has a suit and value
@@ -68,17 +69,14 @@ class Player(object):
 	def total(self):
 		sum_hand = 0
 		for c in self.hand:
+			if c.value != "Ace" and c.value != "Jack" and c.value != "Queen" and c.value != "King":
+				sum_hand += int(c.value)
+			if c.value == "Ace":
+				sum_hand += 11
+				if sum_hand > 21:
+					sum_hand -= 10
 			if c.value == "Jack" or c.value == "Queen" or c.value == "King":
 				sum_hand += 10;
-			# Ace interpretation as either 11 or 1 
-			elif c.value == "Ace":
-				temp = sum_hand + 11
-				if temp > 21:
-					sum_hand += 1
-				else:
-					sum_hand +=11
-			else:
-				sum_hand += int(c.value)
 		return sum_hand
 
 	def winnings(self, wins, num_games):

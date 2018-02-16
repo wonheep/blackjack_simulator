@@ -28,7 +28,7 @@
 **Game Rules**
 * Player is given 2 cards and dealer is given 2 cards from shuffled deck, one of the dealer's cards is hidden 
 * Player plays (hit or stand) before dealer can play
-* If dealer and player ties --> push (nothing happens)
+* If dealer and player ties --> push (nothing happens, num_games incremented but no win for either party)
 * If player busts, house wins
 * Dealer must hit on anything less than or equal to 16 and a soft 17 (hand with Ace card involved)
 * Dealer plays after player stands

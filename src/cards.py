@@ -68,12 +68,14 @@ class Player(object):
 	def total(self):
 		sum_hand = 0
 		for c in self.hand:
-			if sum_hand > 21 and c.value == "Ace":
-				sum_hand -= 10
-			elif c.value == "Jack" or c.value == "Queen" or c.value == "King":
+			if c.value == "Jack" or c.value == "Queen" or c.value == "King":
 				sum_hand += 10;
 			elif c.value == "Ace":
-				sum_hand += 11
+				temp = sum_hand + 11
+				if temp > 21:
+					sum_hand += 1
+				else:
+					sum_hand +=11
 			else:
 				sum_hand += int(c.value)
 		return sum_hand
@@ -87,3 +89,7 @@ class Player(object):
 	def show(self):
 		for c in self.hand:
 			c.show();
+
+	def show_one(self):
+		 c = self.hand[0]
+		 c.show()

@@ -45,6 +45,8 @@ def winner_msg(msg, width):
 def dotted_line():
     print(color.BOLD + "-------------------------------------------------------" + color.END)
 
+def dotted_line2():
+    print(color.BOLD + "-------------------DEALER PLAYS------------------------" + color.END)
 
 def end_line():
 	 print(color.BOLD + color.REDBRIGHT + "\n-----------------------END GAME-------------------------\n" + color.END + color.END)
@@ -59,8 +61,8 @@ def player_statement():
 
 
 def dealer_statement():
-	print(color.BOLD + "\nThe dealer has his cards now too!" + color.END)
-
+	print(color.BOLD + "\nThe dealer has his cards now too!\n" + color.END)
+	print(color.DARKCYAN + "HIDDEN: Card 1" + color.END)
 
 def beginning_msg():
 	print(border_msg("""    Welcome to a game of Blackjack!   """, 40))
@@ -76,9 +78,17 @@ def player_wins():
 	print(winner_msg(("   YOU WIN!   "), 15))
 	print("\n")
 
+def push():
+	print(winner_msg(("     TIE! NOBODY WON!     "), 25))
+	print("\n")
+
 
 def input_msg():
 	print(color.BOLD + color.BLUE + "Would you like to hit or stand?" + color.END + color.END)
 	player_input = input(color.BLUE + "Type h to hit and s to stand: " + color.END)
 	return player_input
+
+def summarygame():
+	 print(color.BOLD + "\n-------------------SUMMARY OF GAME---------------------\n" + color.END)
+
 
